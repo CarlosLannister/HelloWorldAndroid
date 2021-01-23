@@ -8,18 +8,37 @@ import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    var isFragmentOneLoaded = true
+    val manager = supportFragmentManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
-
-        text_view.text = viewModel.number.toString()
-
-        var number = 0
-        button.setOnClickListener  {
-            viewModel.addNumber()
-            text_view.text = viewModel.number.toString()
+        button_change.setOnClickListener{
+            if(isFragmentOneLoaded)
+                showFragmentTwo()
+            else
+                showFragmentOne()
         }
+    }
+
+    fun showFragmentOne(){
+        val transaction = manager.beginTransaction()
+        val fragment = FragmentOne()
+        transaction.replace(R.id.fragment_holder, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+        isFragmentOneLoaded = true
+    }
+
+    fun showFragmentTwo(){
+        val transaction = manager.beginTransaction()
+        val fragment = FragmentTwo()
+        transaction.replace(R.id.fragment_holder, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+        isFragmentOneLoaded = false
     }
 }
