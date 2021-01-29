@@ -1,4 +1,4 @@
-package com.example.helloworld
+package com.example.helloworld.views
 
 import android.content.Context
 import android.os.Bundle
@@ -7,7 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.helloworld.R
+import kotlinx.android.synthetic.main.fragment_one.*
 import kotlinx.android.synthetic.main.fragment_two.view.*
 
 class FragmentTwo: Fragment() {
@@ -31,14 +34,14 @@ class FragmentTwo: Fragment() {
     ): View? {
         Log.d(TAG, "onCreateView")
         val view = inflater.inflate(R.layout.fragment_two, container, false)
+        val viewModel = ViewModelProvider(requireActivity()).get(FragmentTwoViewModel::class.java)
 
-        val viewModel = ViewModelProvider(requireActivity()).get(MainActivityViewModel::class.java)
+        viewModel.getNumber().observe(viewLifecycleOwner, Observer {
+            textView.text = it.toString()
+        })
 
-        //id 'kotlin-android-extensions'
-        view.textView.text = viewModel.number.toString()
         view.addButton.setOnClickListener {
             viewModel.addNumber()
-            view.textView.text = viewModel.number.toString()
         }
 
         return view

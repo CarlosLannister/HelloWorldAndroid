@@ -1,10 +1,8 @@
-package com.example.helloworld
+package com.example.helloworld.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
-import androidx.lifecycle.ViewModelProvider
+import com.example.helloworld.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
